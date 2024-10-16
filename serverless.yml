@@ -1,0 +1,44 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: dcacedar
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: serverless-aws
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: serverless-aws
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - arn:aws:dynamodb:us-east-1:230641983867:table/SwapiTable
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  createPersonaje:
+    handler: src/createPersonaje.createPersonaje
+    events:
+      - httpApi:
+          path: /crearPersonaje
+          method: post
+  getPersonaje:
+    handler: src/getPersonaje.getPersonaje
+    events:
+      - httpApi:
+          path: /obtenerPersonaje
+          method: get
+  getJedi:
+    handler: src/getJedi.getJedi
+    events:
+      - httpApi:
+          path: /obtenerJedi
+          method: get
